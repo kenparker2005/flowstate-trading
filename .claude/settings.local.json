@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "PowerShell(cat C:\\\\Users\\\\parke\\\\flowstate-trading\\\\node_modules\\\\lightweight-charts\\\\package.json | node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const p=JSON.parse\\(d\\); console.log\\('version:', p.version\\); console.log\\('exports:', JSON.stringify\\(p.exports, null, 2\\).slice\\(0, 500\\)\\)\")",
+      "PowerShell(supabase *)",
+      "PowerShell(psql *)",
+      "Bash(npx tsc *)",
+      "Bash(node *)",
+      "Bash(dir \"C:\\\\Users\\\\parke\\\\flowstate-trading\\\\src\\\\pages\" /b)",
+      "Bash(dir \"C:\\\\Users\\\\parke\\\\flowstate-trading\\\\src\\\\components\" /b)",
+      "Bash(dir C:\\\\Users\\\\parke\\\\flowstate-trading\\\\data\\\\sample *)",
+      "PowerShell($es = Get-Content \"C:\\\\Users\\\\parke\\\\flowstate-trading\\\\data\\\\sample\\\\ES_M1_sample.json\" | ConvertFrom-Json; Write-Host \"ES candle count: $\\($es.Count\\)\"; Write-Host \"First: $\\($es[0] | ConvertTo-Json -Compress\\)\"; Write-Host \"Last: $\\($es[-1] | ConvertTo-Json -Compress\\)\")",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\parke\\\\flowstate-trading\\\\public\\\\data\" | Select-Object Name, @{N='Size_KB';E={[math]::Round\\($_.Length/1KB,1\\)}})",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\parke\\\\flowstate-trading\\\\public\\\\data\" | Select-Object Name, @{N='Size_MB';E={[math]::Round\\($_.Length/1MB,1\\)}})",
+      "Bash(git add *)",
+      "Bash(git init *)",
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)",
+      "Bash(git push *)"
+    ]
+  }
+}

@@ -1,0 +1,409 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: #F8F9FA;
+  color: #111827;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Resets ─────────────────────────────────────────── */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* ─── Tab group (pairs, timeframes) ─────────────────── */
+.tab-group {
+  display: flex;
+  border: 1px solid #1E1E26;
+}
+
+.tab-btn {
+  padding: 4px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #787B86;
+  background: transparent;
+  transition: color 0.12s, background 0.12s;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.tab-btn:hover {
+  color: #D1D4DC;
+}
+
+.tab-btn.active {
+  color: #D1D4DC;
+  background: #1E1E26;
+}
+
+/* ─── Ghost action buttons ───────────────────────────── */
+.ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #787B86;
+  border: 1px solid #1E1E26;
+  background: transparent;
+  transition: color 0.12s, border-color 0.12s;
+  letter-spacing: 0.04em;
+}
+
+.ghost-btn:hover {
+  color: #D1D4DC;
+  border-color: #434651;
+}
+
+.ghost-btn.active {
+  color: #2962FF;
+  border-color: #2962FF;
+}
+
+/* ─── Nav text links ────────────────────────────────── */
+.nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #787B86;
+  text-decoration: none;
+  transition: color 0.12s;
+  letter-spacing: 0.01em;
+}
+
+.nav-link:hover {
+  color: #D1D4DC;
+}
+
+.nav-link.active {
+  color: #D1D4DC;
+}
+
+/* ─── Panel section label ───────────────────────────── */
+.panel-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #434651;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ─── Direction buttons ─────────────────────────────── */
+.dir-btn {
+  flex: 1;
+  padding: 9px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: opacity 0.12s, background 0.12s;
+}
+
+.dir-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.dir-btn.long {
+  background: #26A69A;
+  color: #0D0D0F;
+}
+
+.dir-btn.long.inactive {
+  background: transparent;
+  color: #26A69A;
+  border: 1px solid #26A69A26;
+}
+
+.dir-btn.long.inactive:hover:not(:disabled) {
+  background: #26A69A1A;
+  border-color: #26A69A;
+}
+
+.dir-btn.short {
+  background: #EF5350;
+  color: #0D0D0F;
+}
+
+.dir-btn.short.inactive {
+  background: transparent;
+  color: #EF5350;
+  border: 1px solid #EF535026;
+}
+
+.dir-btn.short.inactive:hover:not(:disabled) {
+  background: #EF53501A;
+  border-color: #EF5350;
+}
+
+/* ─── Input mode toggle ─────────────────────────────── */
+.mode-tab {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  color: #434651;
+  border-bottom: 1px solid transparent;
+  transition: color 0.12s, border-color 0.12s;
+}
+
+.mode-tab.active {
+  color: #D1D4DC;
+  border-bottom-color: #2962FF;
+}
+
+/* ─── Form inputs ───────────────────────────────────── */
+.trade-input {
+  width: 100%;
+  background: #0D0D0F;
+  border: 1px solid #1E1E26;
+  color: #D1D4DC;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 7px 9px;
+  outline: none;
+  transition: border-color 0.12s;
+}
+
+.trade-input:focus {
+  border-color: #2962FF;
+}
+
+.trade-input::placeholder {
+  color: #2E3140;
+}
+
+.trade-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.input-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #434651;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* ─── Enter trade button ────────────────────────────── */
+.enter-btn {
+  width: 100%;
+  padding: 10px;
+  background: #2962FF;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: background 0.12s;
+}
+
+.enter-btn:hover:not(:disabled) {
+  background: #1a4fd8;
+}
+
+.enter-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ─── Replay buttons ────────────────────────────────── */
+.replay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  padding: 4px 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #787B86;
+  border: 1px solid #1E1E26;
+  background: transparent;
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+  letter-spacing: 0.03em;
+}
+
+.replay-btn:hover {
+  color: #D1D4DC;
+  border-color: #434651;
+  background: #1E1E2620;
+}
+
+.replay-btn.play {
+  color: #2962FF;
+  border-color: #2962FF40;
+}
+
+.replay-btn.play:hover {
+  background: #2962FF15;
+  border-color: #2962FF;
+}
+
+.replay-btn.stop {
+  color: #EF5350;
+  border-color: #EF535040;
+}
+
+.replay-btn.stop:hover {
+  background: #EF535015;
+  border-color: #EF5350;
+}
+
+/* ─── Price display ─────────────────────────────────── */
+.price-display {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: #0D0D0F; }
+::-webkit-scrollbar-thumb { background: #1E1E26; }
+::-webkit-scrollbar-thumb:hover { background: #2E3140; }
+
+/* ─── Landing / auth page shared ───────────────────── */
+.btn-primary {
+  display: inline-block;
+  padding: 8px 20px;
+  background: #2962FF;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.btn-primary:hover {
+  background: #1a4fd8;
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.input-field {
+  background: #0D0D0F;
+  border: 1px solid #1E1E26;
+  color: #D1D4DC;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  padding: 9px 11px;
+  outline: none;
+  transition: border-color 0.12s;
+  width: 100%;
+}
+
+.input-field:focus {
+  border-color: #2962FF;
+}
+
+.input-field::placeholder {
+  color: #2E3140;
+}
+
+/* ─── Marketing pages (light theme) ────────────────── */
+.mkt-btn-primary {
+  display: inline-block;
+  padding: 11px 24px;
+  background: linear-gradient(135deg, #2962FF 0%, #1E4FFF 100%);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.mkt-btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.mkt-btn-ghost {
+  display: inline-block;
+  padding: 11px 24px;
+  background: transparent;
+  color: #374151;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, transform 0.15s;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.mkt-btn-ghost:hover {
+  border-color: #2962FF;
+  color: #2962FF;
+  transform: translateY(-1px);
+}
+
+.mkt-input {
+  width: 100%;
+  background: #F9FAFB;
+  border: 1.5px solid #E5E7EB;
+  color: #111827;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.mkt-input:focus {
+  border-color: #2962FF;
+  box-shadow: 0 0 0 3px rgba(41,98,255,0.12);
+}
+
+.mkt-input::placeholder {
+  color: #9CA3AF;
+}
