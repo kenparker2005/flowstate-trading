@@ -42,13 +42,20 @@ function SetupRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function PublicRoute({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+  if (loading) return <LoadingSpinner />;
+  if (user) return <Navigate to="/app/dashboard" replace />;
+  return <>{children}</>;
+}
+
 function AppRoutes() {
   return (
     <Routes>
       {/* Public */}
-      <Route path="/" element={<Landing />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/"        element={<Landing />} />
+      <Route path="/login"   element={<Login />} />
+      <Route path="/signup"  element={<Signup />} />
       <Route path="/pricing" element={<Pricing />} />
 
       {/* Onboarding */}

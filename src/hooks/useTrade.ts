@@ -8,9 +8,10 @@ interface UseTradeOptions {
   userId: string | null;
   symbol: string;
   onTradeClose: (result: TradeResult) => void;
+  onTradeSaved?: (ok: boolean) => void;
 }
 
-export function useTrade({ sessionId, userId, onTradeClose }: UseTradeOptions) {
+export function useTrade({ sessionId, userId, onTradeClose, onTradeSaved }: UseTradeOptions) {
   const [activeTrade, setActiveTrade] = useState<ActiveTrade | null>(null);
   const [trades, setTrades] = useState<ClosedTrade[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -77,7 +78,7 @@ export function useTrade({ sessionId, userId, onTradeClose }: UseTradeOptions) {
     setActiveTrade(null);
 
     if (sessionId && userId) {
-      await supabase.from('trades').insert({
+      const { error: dbError } = await supabase.from('trades').insert({
         id: tradeId,
         session_id: sessionId,
         user_id: userId,
@@ -93,10 +94,16 @@ export function useTrade({ sessionId, userId, onTradeClose }: UseTradeOptions) {
         rr_achieved: rrAchieved,
         bias_checked: activeTrade.biasChecked,
       });
+      if (dbError) {
+        console.error('[useTrade] Failed to save trade to database:', dbError);
+        onTradeSaved?.(false);
+      } else {
+        onTradeSaved?.(true);
+      }
     }
 
     onTradeClose(result);
-  }, [activeTrade, sessionId, userId, onTradeClose]);
+  }, [activeTrade, sessionId, userId, onTradeClose, onTradeSaved]);
 
   const closeManualy = useCallback(async (candle: Candle, barIndex: number) => {
     if (!activeTrade) return;
@@ -134,7 +141,7 @@ export function useTrade({ sessionId, userId, onTradeClose }: UseTradeOptions) {
     setActiveTrade(null);
 
     if (sessionId && userId) {
-      await supabase.from('trades').insert({
+      const { error: dbError } = await supabase.from('trades').insert({
         id: tradeId,
         session_id: sessionId,
         user_id: userId,
@@ -150,10 +157,16 @@ export function useTrade({ sessionId, userId, onTradeClose }: UseTradeOptions) {
         rr_achieved: rrAchieved,
         bias_checked: activeTrade.biasChecked,
       });
+      if (dbError) {
+        console.error('[useTrade] Failed to save trade to database:', dbError);
+        onTradeSaved?.(false);
+      } else {
+        onTradeSaved?.(true);
+      }
     }
 
     onTradeClose(result);
-  }, [activeTrade, sessionId, userId, onTradeClose]);
+  }, [activeTrade, sessionId, userId, onTradeClose, onTradeSaved]);
 
   return { activeTrade, trades, error, enterTrade, checkAndClose, closeManualy };
 }

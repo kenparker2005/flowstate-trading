@@ -81,6 +81,7 @@ export function Simulator() {
   const [pendingResult, setPendingResult] = useState<TradeResult | null>(null);
   const [lastResult, setLastResult] = useState<TradeResult | null>(null);
   const [biasItems, setBiasItems] = useState<string[]>([]);
+  const [toast, setToast] = useState<{ text: string; ok: boolean } | null>(null);
   const autoStartedRef = useRef(false);
 
   const replayInitConfig: ReplayInitConfig | undefined = sessionConfig
@@ -128,6 +129,10 @@ export function Simulator() {
     userId: user?.id ?? null,
     symbol: selectedPair.symbol,
     onTradeClose: handleTradeClose,
+    onTradeSaved: (ok) => {
+      setToast({ text: ok ? 'Trade saved' : 'Save failed — check console', ok });
+      setTimeout(() => setToast(null), 3000);
+    },
   });
 
   useEffect(() => {
@@ -408,6 +413,27 @@ export function Simulator() {
             handleNewSession();
           }}
         />
+      )}
+
+      {/* Save toast */}
+      {toast && (
+        <div style={{
+          position: 'fixed',
+          bottom: 24,
+          right: 24,
+          zIndex: 9999,
+          padding: '10px 18px',
+          borderRadius: 10,
+          fontFamily: 'Inter, sans-serif',
+          fontSize: 13,
+          fontWeight: 600,
+          color: '#fff',
+          background: toast.ok ? '#16A34A' : '#DC2626',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+          pointerEvents: 'none',
+        }}>
+          {toast.ok ? '✓ ' : '✕ '}{toast.text}
+        </div>
       )}
     </div>
   );
