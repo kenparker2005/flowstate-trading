@@ -5,7 +5,7 @@ import type { Candle } from '../types';
 const M1_CACHE: Record<string, Candle[]> = {};
 
 // Single in-flight promise per symbol – prevents duplicate fetches
-const M1_PENDING: Record<string, Promise<Candle[]>> = {};
+const M1_PENDING: Partial<Record<string, Promise<Candle[]>>> = {};
 
 // Data files use compact array format: [time, open, high, low, close, volume]
 type CompactCandle = [number, number, number, number, number, number];

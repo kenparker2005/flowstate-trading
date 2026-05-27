@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
+import type { ReactElement } from 'react';
 import type { IChartApi, ISeriesApi, SeriesType, Time } from 'lightweight-charts';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -37,7 +38,7 @@ function distToSegment(px:number, py:number, ax:number, ay:number, bx:number, by
 
 // ── Toolbar icons (SVG paths) ─────────────────────────────────────────────────
 
-const TOOLS: { id: DrawingTool; label: string; icon: JSX.Element }[] = [
+const TOOLS: { id: DrawingTool; label: string; icon: ReactElement }[] = [
   {
     id: 'cursor', label: 'Select / Pan',
     icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4 0l16 12-7 1-4 7z"/></svg>,
