@@ -43,7 +43,8 @@ export function getCachedM1(symbol: string): Candle[] {
 // ── Timeframe aggregation ─────────────────────────────────────────────────────
 
 const TF_MINUTES: Record<string, number> = {
-  M1: 1, M5: 5, M15: 15, H1: 60, H4: 240, D1: 1440,
+  M1: 1, M2: 2, M3: 3, M5: 5, M10: 10, M15: 15,
+  M30: 30, M45: 45, H1: 60, H4: 240, D1: 1440, W1: 10080,
 };
 
 export function aggregateCandles(m1: Candle[], timeframe: string): Candle[] {

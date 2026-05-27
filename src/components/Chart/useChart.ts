@@ -64,10 +64,21 @@ export function useChart(containerRef: React.RefObject<HTMLDivElement | null>) {
       close: c.close,
     }));
     seriesRef.current.setData(data);
-    if (chartRef.current) {
-      chartRef.current.timeScale().fitContent();
-    }
   }, []);
+
+  const appendCandle = useCallback((candle: Candle) => {
+    seriesRef.current?.update({
+      time: candle.time as Time,
+      open: candle.open,
+      high: candle.high,
+      low: candle.low,
+      close: candle.close,
+    });
+  }, []);
+
+  const fitContent = useCallback(() => {
+    chartRef.current?.timeScale().fitContent();
+  }, [chartRef]);
 
   const addMarker = useCallback((
     time: number,
@@ -154,5 +165,5 @@ export function useChart(containerRef: React.RefObject<HTMLDivElement | null>) {
     markersPluginRef.current?.setMarkers([]);
   }, []);
 
-  return { updateCandles, addMarker, drawTradeLines, clearMarkers };
+  return { chartRef, seriesRef, updateCandles, appendCandle, fitContent, addMarker, drawTradeLines, clearMarkers };
 }

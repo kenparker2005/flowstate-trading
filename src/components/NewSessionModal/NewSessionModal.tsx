@@ -19,19 +19,19 @@ const TIME_PRESETS = [
 type DateMode     = 'random' | 'specific';
 type SessionStart = 'any' | 'asian' | 'london' | 'ny' | 'custom';
 
-/** UTC times for each named session open */
+/** UTC times for each named session open (all times in EST = UTC−5) */
 const SESSION_UTC: Record<Exclude<SessionStart, 'any' | 'custom'>, string> = {
-  asian:  '23:00',
-  london: '08:00',
-  ny:     '14:30',
+  asian:  '00:00',   // 7:00 PM EST  (midnight UTC = start of Asia/Tokyo hour)
+  london: '07:00',   // 2:00 AM EST  (European pre-market)
+  ny:     '13:00',   // 8:00 AM EST  (NY pre-market open)
 };
 
 const SESSION_OPTS: { id: SessionStart; label: string; sub: string }[] = [
-  { id: 'any',    label: 'Any time',    sub: 'fully random' },
-  { id: 'asian',  label: 'Asian open',  sub: '23:00 UTC · 6 PM ET'  },
-  { id: 'london', label: 'London open', sub: '08:00 UTC · 3 AM ET'  },
-  { id: 'ny',     label: 'NY open',     sub: '14:30 UTC · 9:30 AM ET' },
-  { id: 'custom', label: 'Custom',      sub: 'pick a time'  },
+  { id: 'any',    label: 'Any time',    sub: 'fully random'           },
+  { id: 'asian',  label: 'Asian open',  sub: '00:00 UTC · 7 PM EST'   },
+  { id: 'london', label: 'London open', sub: '07:00 UTC · 2 AM EST'   },
+  { id: 'ny',     label: 'NY open',     sub: '13:00 UTC · 8 AM EST'   },
+  { id: 'custom', label: 'Custom',      sub: 'pick a time'            },
 ];
 
 interface Props {

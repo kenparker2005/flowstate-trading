@@ -18,11 +18,18 @@ const PAIRS = [
 ];
 
 const TIMEFRAMES = [
-  { value: 'M1',  label: '1min'  },
-  { value: 'M5',  label: '5min'  },
-  { value: 'M15', label: '15min' },
-  { value: 'H1',  label: '1hr'   },
-  { value: 'H4',  label: '4hr'   },
+  { value: 'M1',  label: '1 min'  },
+  { value: 'M2',  label: '2 min'  },
+  { value: 'M3',  label: '3 min'  },
+  { value: 'M5',  label: '5 min'  },
+  { value: 'M10', label: '10 min' },
+  { value: 'M15', label: '15 min' },
+  { value: 'M30', label: '30 min' },
+  { value: 'M45', label: '45 min' },
+  { value: 'H1',  label: '1 hr'   },
+  { value: 'H4',  label: '4 hr'   },
+  { value: 'D1',  label: 'Daily'  },
+  { value: 'W1',  label: 'Weekly' },
 ];
 
 const S = {
@@ -82,6 +89,7 @@ export function Simulator() {
   const [lastResult, setLastResult] = useState<TradeResult | null>(null);
   const [biasItems, setBiasItems] = useState<string[]>([]);
   const [toast, setToast] = useState<{ text: string; ok: boolean } | null>(null);
+  const [clearSignal, setClearSignal] = useState(0);
   const autoStartedRef = useRef(false);
 
   const replayInitConfig: ReplayInitConfig | undefined = sessionConfig
@@ -154,6 +162,7 @@ export function Simulator() {
 
   async function handleNewSession() {
     replay.reset({ dateMode: 'random' });
+    setClearSignal(n => n + 1);
     if (user?.id) {
       await startSession(selectedPair.id, selectedTf, { dateIsHidden: true });
     }
@@ -197,28 +206,37 @@ export function Simulator() {
 
         <div style={S.divider} />
 
-        {/* Timeframe pills */}
-        <div style={{ display: 'flex', gap: 4, marginRight: 16 }}>
-          {TIMEFRAMES.map(tf => (
-            <button
-              key={tf.value}
-              onClick={() => setSelectedTf(tf.value)}
-              style={{
-                padding: '5px 10px',
-                borderRadius: 999,
-                border: 'none',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: 11,
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'background 0.12s, color 0.12s',
-                background: selectedTf === tf.value ? '#EEF2FF' : 'transparent',
-                color: selectedTf === tf.value ? '#2962FF' : '#9CA3AF',
-              }}
-            >
-              {tf.label}
-            </button>
-          ))}
+        {/* Timeframe dropdown */}
+        <div style={{ position: 'relative', marginRight: 16 }}>
+          <select
+            value={selectedTf}
+            onChange={e => setSelectedTf(e.target.value)}
+            style={{
+              appearance: 'none',
+              WebkitAppearance: 'none',
+              padding: '5px 28px 5px 10px',
+              borderRadius: 8,
+              border: '1.5px solid #E5E7EB',
+              background: '#FFFFFF',
+              fontFamily: 'Inter, sans-serif',
+              fontSize: 12,
+              fontWeight: 600,
+              color: '#2962FF',
+              cursor: 'pointer',
+              outline: 'none',
+            }}
+          >
+            {TIMEFRAMES.map(tf => (
+              <option key={tf.value} value={tf.value}>{tf.label}</option>
+            ))}
+          </select>
+          <svg
+            width="10" height="10" viewBox="0 0 10 10"
+            style={{ position: 'absolute', right: 9, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#9CA3AF' }}
+            fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+          >
+            <polyline points="2,3.5 5,6.5 8,3.5" />
+          </svg>
         </div>
 
         <div style={S.divider} />
@@ -360,9 +378,11 @@ export function Simulator() {
           <div style={{ flex: 1, overflow: 'hidden', borderRadius: '16px 16px 0 0' }}>
             <ChartContainer
               candles={replay.state.candles}
+              resetVersion={replay.resetVersion}
               activeTrade={trade.activeTrade}
               lastResult={lastResult}
               revealDate={replay.state.revealDate}
+              clearSignal={clearSignal}
             />
           </div>
           <ReplayControls
